@@ -83,6 +83,9 @@ public class GamePanel extends JPanel {
 
 
         //如何画棋子
+        /**
+         * 画红棋：车
+         */
         //1、准备图片路径
         String che0Path = "picture" + File.separator + "che0.png";
         //2、通过图片路径得到图片对象
@@ -90,6 +93,9 @@ public class GamePanel extends JPanel {
         //3、使用g.drawImage方法将图片绘制到面板上
         g.drawImage(che0Img, 5, 5, 30,30,this);
 
+        /**
+         * 画红棋：马
+         */
         //1、准备图片路径
         String ma0Path = "picture" + File.separator + "ma0.png";
         //2、通过图片路径得到图片对象
@@ -97,9 +103,14 @@ public class GamePanel extends JPanel {
         //3、使用g.drawImage方法将图片绘制到面板上
         g.drawImage(ma0Img, 45, 5, 30,30,this);
 
+        /**
+         * 画红棋：象
+         */
         String xiang0Path = "picture" + File.separator + "xiang0.png";
         Image xiang0Image = Toolkit.getDefaultToolkit().getImage(xiang0Path);
-        
+        g.drawImage(xiang0Image, 85, 5, 30,30,this);
+
+
 
 
 
