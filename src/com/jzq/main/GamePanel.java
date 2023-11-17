@@ -82,36 +82,56 @@ public class GamePanel extends JPanel {
         g.drawImage(bgImg, 0, 0, this);
 
 
-        //如何画棋子
-        /**
-         * 画红棋：车
-         */
-        //1、准备图片路径
-        String che0Path = "picture" + File.separator + "che0.png";
-        //2、通过图片路径得到图片对象
-        Image che0Img = Toolkit.getDefaultToolkit().getImage(che0Path);
-        //3、使用g.drawImage方法将图片绘制到面板上
-        g.drawImage(che0Img, 5, 5, 30,30,this);
+//        //如何画棋子
+//        /**
+//         * 画红棋：车
+//         */
+//        //1、准备图片路径
+//        String che0Path = "picture" + File.separator + "che0.png";
+//        //2、通过图片路径得到图片对象
+//        Image che0Img = Toolkit.getDefaultToolkit().getImage(che0Path);
+//        //3、使用g.drawImage方法将图片绘制到面板上
+//        g.drawImage(che0Img, 5, 5, 30,30,this);
+//
+//        /**
+//         * 画红棋：马
+//         */
+//        //1、准备图片路径
+//        String ma0Path = "picture" + File.separator + "ma0.png";
+//        //2、通过图片路径得到图片对象
+//        Image ma0Img = Toolkit.getDefaultToolkit().getImage(ma0Path);
+//        //3、使用g.drawImage方法将图片绘制到面板上
+//        g.drawImage(ma0Img, 45, 5, 30,30,this);
+//
+//        /**
+//         * 画红棋：象
+//         */
+//        String xiang0Path = "picture" + File.separator + "xiang0.png";
+//        Image xiang0Image = Toolkit.getDefaultToolkit().getImage(xiang0Path);
+//        g.drawImage(xiang0Image, 85, 5, 30,30,this);
 
         /**
-         * 画红棋：马
+         * 使用数组和循环来优化代码
+         *     变量有一个局限性，就是只能保存一个数据
+         *     如何保存多个数据？
+         *         就需要使用到数组和集合
+         *     数组的基本使用：
+         *         1、如何定义，必须指定长度
+         *             静态定义
+         *                  格式：数据类型[] 数组名 = new 数据类型[]{值1, 值2, 值3, ...};
+         *                  int[] ints = {1, 2, 3};
+         *             动态定义
+         *                  int[] ints = new int[3];
+         *         2、数组的长度
+         *         3、数组的索引
+         *         4、数组元素的使用及赋值
+         *         5、数组的异常
+         *         6、数组的遍历，使用循环
          */
-        //1、准备图片路径
-        String ma0Path = "picture" + File.separator + "ma0.png";
-        //2、通过图片路径得到图片对象
-        Image ma0Img = Toolkit.getDefaultToolkit().getImage(ma0Path);
-        //3、使用g.drawImage方法将图片绘制到面板上
-        g.drawImage(ma0Img, 45, 5, 30,30,this);
-
-        /**
-         * 画红棋：象
-         */
-        String xiang0Path = "picture" + File.separator + "xiang0.png";
-        Image xiang0Image = Toolkit.getDefaultToolkit().getImage(xiang0Path);
-        g.drawImage(xiang0Image, 85, 5, 30,30,this);
-
-
-
+        //定义了一个String类型的变量，变量名为path
+        String Path = "picture" + File.separator + "xiang0.png";
+        Image Image = Toolkit.getDefaultToolkit().getImage(Path);
+        g.drawImage(Image, 85, 5, 30,30,this);
 
 
 
