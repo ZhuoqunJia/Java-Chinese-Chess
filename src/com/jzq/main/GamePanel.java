@@ -154,37 +154,42 @@ public class GamePanel extends JPanel {
 //        String[] names = new String[3];
 //        names[0] = "che0.png";
 //        names[1] = "ma0.png";
-        String[] names = new String[]{"che", "ma", "xiang", "shi", "boss", "shi", "xiang", "ma", "che",
-                                        "pao", "pao",
-                                        "bing", "bing", "bing", "bing", "bing"};
-        //旗子的阵营
-        int player = 0;
-        //图片的后缀
-        String suffix = ".png";
-        //棋子的大小
-        int size = 30;
-        //棋盘的边距
-        int margin = 20;
-        //棋子之间间距
-        int space = 40;
+//        String[] names = new String[]{"che", "ma", "xiang", "shi", "boss", "shi", "xiang", "ma", "che",
+//                                        "pao", "pao",
+//                                        "bing", "bing", "bing", "bing", "bing"};
+//        //旗子的阵营
+//        int player = 0;
+//        //图片的后缀
+//        String suffix = ".png";
+//        //棋子的大小
+//        int size = 30;
+//        //棋盘的边距
+//        int margin = 20;
+//        //棋子之间间距
+//        int space = 40;
 //        int[] xs = {5, 45, 85, 125, 165, 205, 245, 285, 325, 45, 285, 5, 85, 165, 245, 325};
 //        int[] ys = {5, 5, 5, 5, 5, 5, 5, 5, 5, 85, 85, 125, 125, 125, 125, 125};
 
-        int[] xs = {1, 2, 3, 4, 5, 6, 7, 8, 9, 2, 8, 1, 3, 5, 7, 9};
-        int[] ys = {1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 4, 4, 4, 4, 4};
-        for (int i = 0; i < names.length; i++) {
-            String Path = "picture" + File.separator + names[i] + player + suffix;
-            Image Image = Toolkit.getDefaultToolkit().getImage(Path);
-            g.drawImage(Image, (margin - size / 2) + space * (xs[i] - 1), (margin - size / 2) + space * (ys[i] - 1), size,size,this);
-        }
+//        int[] xs = {1, 2, 3, 4, 5, 6, 7, 8, 9, 2, 8, 1, 3, 5, 7, 9};
+//        int[] ys = {1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 4, 4, 4, 4, 4};
+//        for (int i = 0; i < names.length; i++) {
+//            String Path = "picture" + File.separator + names[i] + player + suffix;
+//            Image Image = Toolkit.getDefaultToolkit().getImage(Path);
+//            g.drawImage(Image, (margin - size / 2) + space * (xs[i] - 1), (margin - size / 2) + space * (ys[i] - 1), size,size,this);
+//        }
+//
+//        //画出黑色方棋子
+//        player = 1;
+//        for (int i = 0; i < names.length; i++) {
+//            String Path = "picture" + File.separator + names[i] + player + suffix;
+//            Image Image = Toolkit.getDefaultToolkit().getImage(Path);
+//            g.drawImage(Image, (margin - size / 2) + space * (this.reverseX(xs[i]) - 1), (margin - size / 2) + space * (this.reverseY(ys[i]) - 1), size,size,this);
+//        }
 
-        //画出黑色方棋子
-        player = 1;
-        for (int i = 0; i < names.length; i++) {
-            String Path = "picture" + File.separator + names[i] + player + suffix;
-            Image Image = Toolkit.getDefaultToolkit().getImage(Path);
-            g.drawImage(Image, (margin - size / 2) + space * (this.reverseX(xs[i]) - 1), (margin - size / 2) + space * (this.reverseY(ys[i]) - 1), size,size,this);
-        }
+        String[] names = new String[]{"che", "ma", "xiang", "shi", "boss", "shi", "xiang", "ma", "che",
+                                "pao", "pao",
+                                "bing", "bing", "bing", "bing", "bing"};
+
 
     }
 
