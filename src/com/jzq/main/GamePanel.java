@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * 在swing编程中面板是指JPanel这个类
@@ -117,30 +118,112 @@ public class GamePanel extends JPanel {
          *         就需要使用到数组和集合
          *     数组的基本使用：
          *         1、如何定义，必须指定长度
-         *             静态定义
-         *                  格式：数据类型[] 数组名 = new 数据类型[]{值1, 值2, 值3, ...};
-         *                  int[] ints = {1, 2, 3};
-         *             动态定义
-         *                  int[] ints = new int[3];
-         *         2、数组的长度
+         *             静态定义，必须是一行，即定义和赋值必须在一行
+         *                  格式：
+         *                      完整格式：
+         *                          数据类型[] 数组名 = new 数据类型[]{值1, 值2, 值3, ...};
+         *                      简写格式：
+         *                          数据类型[] 数组名 = {值1, 值2, 值3}；
+         *                          int[] ints = {1, 2, 3};
+         *             动态定义，可以先定义，在赋值
+         *                  格式：
+         *                      数据类型[] 数组名 = new 数据类型[数组长度]；
+         *                      int[] ints = new int[3];
+         *                      先定义：数据类型[] 数组名 [= null];
+         *                      后赋值：数组名 = new 数据类型[数组长度];
+         *         2、数组的长度: length属性
          *         3、数组的索引
+         *              从0开始，长度-1 结束  [0, length - 1]
+         *              如果超出范围，会抛出异常，数组索引越界异常，java.lang.ArrayIndexOutBoundsException
          *         4、数组元素的使用及赋值
+         *              格式：数组名[索引值] = 值;
+         *              注意：数组在使用之前，一定要先初始化，即赋值，否则报空指针异常 java.lang.NullPointerException
          *         5、数组的异常
+         *              数组索引越界异常：java.lang.ArrayIndexOutOfBoundException
+         *              空指针异常：java.lang.NullPointerException
          *         6、数组的遍历，使用循环
+         *              遍历就是指，从头到尾或反过来，从尾到头，一个个元素的过一遍
          */
         //定义了一个String类型的变量，变量名为path
-        String Path = "picture" + File.separator + "xiang0.png";
-        Image Image = Toolkit.getDefaultToolkit().getImage(Path);
-        g.drawImage(Image, 85, 5, 30,30,this);
-        //
+//        String Path = "picture" + File.separator + "xiang0.png";
+//        Image Image = Toolkit.getDefaultToolkit().getImage(Path);
+//        g.drawImage(Image, 85, 5, 30,30,this);
 
+        //定义字符创数组
+        //String[] names = {"che0.png", "che0.png", "che0.png"};
+//        String[] names = new String[3];
+//        names[0] = "che0.png";
+//        names[1] = "ma0.png";
+        String[] names = new String[]{"che", "ma", "xiang", "shi", "boss", "shi", "xiang", "ma", "che",
+                                        "pao", "pao",
+                                        "bing", "bing", "bing", "bing", "bing"};
+        //旗子的阵营
+        int player = 0;
+        //图片的后缀
+        String suffix = ".png";
+        //棋子的大小
+        int size = 30;
+        //棋盘的边距
+        int margin = 20;
+        //棋子之间间距
+        int space = 40;
+//        int[] xs = {5, 45, 85, 125, 165, 205, 245, 285, 325, 45, 285, 5, 85, 165, 245, 325};
+//        int[] ys = {5, 5, 5, 5, 5, 5, 5, 5, 5, 85, 85, 125, 125, 125, 125, 125};
 
+        int[] xs = {1, 2, 3, 4, 5, 6, 7, 8, 9, 2, 8, 1, 3, 5, 7, 9};
+        int[] ys = {1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 4, 4, 4, 4, 4};
+        for (int i = 0; i < names.length; i++) {
+            String Path = "picture" + File.separator + names[i] + player + suffix;
+            Image Image = Toolkit.getDefaultToolkit().getImage(Path);
+            g.drawImage(Image, (margin - size / 2) + space * (xs[i] - 1), (margin - size / 2) + space * (ys[i] - 1), size,size,this);
+        }
 
+        //画出黑色方棋子
+        player = 1;
+        for (int i = 0; i < names.length; i++) {
+            String Path = "picture" + File.separator + names[i] + player + suffix;
+            Image Image = Toolkit.getDefaultToolkit().getImage(Path);
+            g.drawImage(Image, (margin - size / 2) + space * (this.reverseX(xs[i]) - 1), (margin - size / 2) + space * (this.reverseY(ys[i]) - 1), size,size,this);
+        }
+
+    }
+
+    /**
+     * 反转x坐标方法
+     * @param x
+     * @return
+     */
+    private int reverseX(int x){
+        return 10 - x;
+    }
+
+    /**
+     * 反转y坐标方法
+     * @param y
+     * @return
+     */
+    private int reverseY(int y){
+        return 11 - y;
     }
 
     public static void main(String[] args) {
 //        String backGroundPicture = "picture" + File.separator + "qipan.jpg";
 //        System.out.println(backGroundPicture);
-        System.out.println(111);
+//        System.out.println(111);
+
+        String[] strings = new String[3];
+        System.out.println(Arrays.toString(strings));
+//        System.out.println(strings[3]);
+        strings[0] = "j";
+        strings[1] = "z";
+        strings[2] = "q";
+
+        for (String ele:
+             strings) {
+            System.out.println(ele);
+        }
+        for (int i = 0; i < strings.length; i++) {
+            System.out.println(strings[i]);
+        }
     }
 }
