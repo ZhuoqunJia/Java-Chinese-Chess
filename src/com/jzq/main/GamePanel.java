@@ -132,7 +132,7 @@ public class GamePanel extends JPanel {
         String Path = "picture" + File.separator + "xiang0.png";
         Image Image = Toolkit.getDefaultToolkit().getImage(Path);
         g.drawImage(Image, 85, 5, 30,30,this);
-
+        //
 
 
 
