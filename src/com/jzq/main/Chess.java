@@ -30,7 +30,7 @@ public class Chess {
     //棋子的网格坐标
     private Point p;
     //棋子的网格坐标，初始位置，不可改变
-//    private Point initP;
+    private Point initP;
     //保存每个棋子的索引位置
 //    private int index;
 
@@ -59,19 +59,53 @@ public class Chess {
 //    }
 
     public void setP(Point p) {
-//        this.p = (Point) p.clone();
-//        if (initP == null) {
-//            initP = this.p;
-//        }
-//        calXY();
 
         //克隆一个新的Point对象
         this.p = (Point) p.clone();
+        if (this.initP == null) {
+            this.initP = this.p;
+        }
         this.calXY();
     }
 
     public Point getP() {
         return this.p;
+    }
+
+    /**
+     * 判断棋子是否可以被移动到指定的位置
+     * @param tp
+     * @return 返回true，表示可移动，返回false，表示不可移动
+     */
+    public boolean isAbleMove(Point tp){
+        if("boss".equals(this.name)){
+            if(tp.x < 4 || tp.x > 6){
+                return false;
+            }
+            //上面和下面
+            if(this.initP.y < 6){
+                //上面
+                if(tp.y > 3 || tp.y < 1){
+                    return false;
+                }
+            }else {
+                //下面
+            }
+
+        } else if ("shi".equals(this.name)) {
+
+        }else if ("xiang".equals(this.name)) {
+
+        }else if ("ma".equals(this.name)) {
+
+        }else if ("che".equals(this.name)) {
+
+        }else if ("pao".equals(this.name)) {
+
+        }else if ("bing".equals(this.name)) {
+
+        }
+        return true;
     }
 
     /**
@@ -135,14 +169,15 @@ public class Chess {
     public void reserve(){
         this.p.x = 10 - this.p.x;
         this.p.y = 11 - this.p.y;
-//        this.initP = p;
+        this.initP = this.p; //不需要加条件，因为reserve()方法在一个棋子对象中只能运行一次
         this.calXY();
     }
 
     public static void main(String[] args) {
         Point p = new Point();
-        System.out.println(p.x);
-
+        p = null;
+        System.out.println(p);
+        p.clone();
 
     }
 }

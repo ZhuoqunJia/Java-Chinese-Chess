@@ -57,11 +57,17 @@ public class GamePanel extends JPanel {
                         }else {
                             //吃子
                             System.out.println("吃子");
+                            if(selectedChess.isAbleMove(p)){
+
+                            }
                         }
                     }else {
                         //第n次点击的时候没有棋子，点的是空白地方
                         //移动
                         System.out.println("移动");
+                        if(selectedChess.isAbleMove(p)){
+                            selectedChess.setP(p);
+                        }
                     }
                 }
                 System.out.println("点击的棋子对象为：selectedChess===" + selectedChess);
