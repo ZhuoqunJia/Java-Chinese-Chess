@@ -8,9 +8,9 @@ package com.jzq.main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 public class GamePanel extends JPanel {
     //定义一个保存所有棋子的成员变量，变量值类型为数组
@@ -20,7 +20,44 @@ public class GamePanel extends JPanel {
     //无参构造方法：权限修饰符 类名(){}
     //构造方法，可以让我们自定义创建对象时，做一些必要的操作
     public GamePanel(){
+        //super(); //调用父类构造方法，每个类的构造方法中，都隐藏有这一行代码，且必须是第一行
+        System.out.println("调用GamePanel的无参构造方法！");
+//        super(); 必须在构造方法的第一行
         this.createChesses();
+        /**
+         * 如何操作棋子
+         *      1、点击棋盘
+         *      2、如何判断点击的地方是否有棋子
+         *      3、如何区分选择，重新选择，移动，吃子
+         */
+        //添加点击事件
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+//                super.mouseClicked(e);
+                System.out.println("点击棋盘的坐标为：x=" + e.getX() + ",y=" + e.getY());
+                Point p = Chess.getPointFromXY(e.getX(), e.getY());
+                System.out.println("点击棋子对象的棋盘的网格坐标对象为：p===" + p);
+                Chess c = getChessByP(p);
+                System.out.println("点击的棋子对象为：c===" + c);
+            }
+        });
+    }
+
+    /**
+     * 根据网格坐标p对象查找棋子对象
+     * @param p
+     * @return
+     */
+    private Chess getChessByP(Point p){
+        for (Chess item:
+             chesses) {
+//            System.out.println(item.getP());
+            if(item.getP().equals(p)){
+                return item; //因为return关键字是结束方法的，所以也会导致循环提前终止
+            }
+        }
+        return null;
     }
 
 
@@ -73,6 +110,8 @@ public class GamePanel extends JPanel {
      */
     @Override //重写注解
     public void paint(Graphics g) {
+        //super调用父类中的方法
+//        super.paint(g); //清除原来的痕迹
         String backGroundPicture = "picture" + File.separator + "qipan.jpg";
         System.out.println("每拖动一次窗口，就会在画板上重新画一次");
         Toolkit toolkit = Toolkit.getDefaultToolkit();
