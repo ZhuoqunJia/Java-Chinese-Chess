@@ -18,15 +18,21 @@ public class Chess {
     //棋子间距
     private final int SPACE = 40;
     //棋子名称
-    private String name;
+    private String name; //若为public修饰，则违反了java面向对象三大特性之一的封装性，使用set和get方法
+
+
     //棋子图片后缀
-    private final String suffix = ".png"; //若为public修饰，则违反了java面向对象三大特性之一的封装性，使用set和get方法
+    private final String suffix = ".png";
     //棋子阵营，0：红，1：黑
     private int player;
     //棋子绘制时的实际坐标位置
     private int x, y;
     //棋子的网格坐标
     private Point p;
+    //棋子的网格坐标，初始位置，不可改变
+    private Point initP;
+    //保存每个棋子的索引位置
+    private int index;
 
     public String getName() {
         return name;
@@ -34,6 +40,34 @@ public class Chess {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(int player) {
+        this.player = player;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public void setP(Point p) {
+        this.p = (Point) p.clone();
+        if (initP == null) {
+            initP = this.p;
+        }
+        calXY();
+    }
+
+    public Point getP() {
+        return p;
     }
 
     /**
@@ -45,7 +79,6 @@ public class Chess {
         String path = "picture" + File.separator + this.name + this.player + this.suffix;
         Image img = Toolkit.getDefaultToolkit().getImage(path);
         g.drawImage(img, this.x, this.y, this.SIZE, this.SIZE, panel);
-
     }
 
     /**
@@ -54,7 +87,16 @@ public class Chess {
     public void calXY(){
         this.x = this.MARGIN - this.SIZE / 2 * (this.p.x - 1);
         this.y = this.MARGIN - this.SIZE / 2 * (this.p.y - 1);
+    }
 
+    /**
+     *反转网格坐标
+     */
+    public void reserve(){
+        this.p.x = 10 - this.p.x;
+        this.p.y = 11 - this.p.y;
+        this.initP = p;
+        this.calXY();
     }
 
     public static void main(String[] args) {
