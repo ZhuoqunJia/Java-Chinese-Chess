@@ -78,6 +78,7 @@ public class Chess {
     public void draw(Graphics g, JPanel panel){
         String path = "picture" + File.separator + this.name + this.player + this.suffix;
         Image img = Toolkit.getDefaultToolkit().getImage(path);
+        //画图片的时候，是以图片的左上角为基准变进行绘制的
         g.drawImage(img, this.x, this.y, this.SIZE, this.SIZE, panel);
     }
 
@@ -85,8 +86,8 @@ public class Chess {
      * 计算xy的绘制坐标
      */
     public void calXY(){
-        this.x = this.MARGIN - this.SIZE / 2 * (this.p.x - 1);
-        this.y = this.MARGIN - this.SIZE / 2 * (this.p.y - 1);
+        this.x = (this.MARGIN - this.SIZE / 2) + this.SPACE * (this.p.x - 1);
+        this.y = (this.MARGIN - this.SIZE / 2) + this.SPACE * (this.p.y - 1);
     }
 
     /**
@@ -102,5 +103,7 @@ public class Chess {
     public static void main(String[] args) {
         Point p = new Point();
         System.out.println(p.x);
+
+
     }
 }
