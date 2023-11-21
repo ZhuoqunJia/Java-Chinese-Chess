@@ -87,6 +87,14 @@ public class Chess {
     }
 
     /**
+     * 绘制棋子的边框
+     * @param g
+     */
+    public void drawRect(Graphics g){
+        g.drawRect(this.x, this.y, Chess.SIZE, Chess.SIZE);
+    }
+
+    /**
      * 计算xy的绘制坐标
      */
     public void calXY(){

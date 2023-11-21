@@ -66,9 +66,13 @@ public class GamePanel extends JPanel {
                 }
                 System.out.println("点击的棋子对象为：selectedChess===" + selectedChess);
                 System.out.println("============一个棋子对象的操作==============");
+                //刷新棋盘，即重新执行paint方法
+                repaint();
             }
         });
     }
+
+
 
     /**
      * 根据网格坐标p对象查找棋子对象
@@ -138,6 +142,7 @@ public class GamePanel extends JPanel {
     public void paint(Graphics g) {
         //super调用父类中的方法
 //        super.paint(g); //清除原来的痕迹
+        System.out.println("paint方法执行");
         String backGroundPicture = "picture" + File.separator + "qipan.jpg";
         System.out.println("每拖动一次窗口，就会在画板上重新画一次");
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -145,5 +150,9 @@ public class GamePanel extends JPanel {
         g.drawImage(bgImg, 0, 0, this);
 
         this.drawChesses(g);
+
+        if(null != this.selectedChess){
+            this.selectedChess.drawRect(g);
+        }
     }
 }
