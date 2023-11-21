@@ -15,6 +15,8 @@ import java.io.File;
 public class GamePanel extends JPanel {
     //定义一个保存所有棋子的成员变量，变量值类型为数组
     private Chess[] chesses = new Chess[32]; //保存所有的棋子
+    //当前选中的棋子
+    private Chess selectedChess;
 
     //构造方法
     //无参构造方法：权限修饰符 类名(){}
@@ -28,7 +30,7 @@ public class GamePanel extends JPanel {
          * 如何操作棋子
          *      1、点击棋盘
          *      2、如何判断点击的地方是否有棋子
-         *      3、如何区分选择，重新选择，移动，吃子
+         *      3、如何区分第一次选择，重新选择，移动，吃子
          */
         //添加点击事件
         this.addMouseListener(new MouseAdapter() {
@@ -38,8 +40,32 @@ public class GamePanel extends JPanel {
                 System.out.println("点击棋盘的坐标为：x=" + e.getX() + ",y=" + e.getY());
                 Point p = Chess.getPointFromXY(e.getX(), e.getY());
                 System.out.println("点击棋子对象的棋盘的网格坐标对象为：p===" + p);
-                Chess c = getChessByP(p);
-                System.out.println("点击的棋子对象为：c===" + c);
+
+                if(null == selectedChess){
+                    //第一次选择
+                    selectedChess = getChessByP(p);
+                    System.out.println("第一次选择");
+                }else {
+                    //重新选择，移动，吃子
+                    Chess c = getChessByP(p);
+                    if(null != c){
+                        //第n次点击的时候有棋子
+                        //重新选择，吃子
+                        if(c.getPlayer() == selectedChess.getPlayer()){
+                            //重新选择
+                            System.out.println("重新选择");
+                        }else {
+                            //吃子
+                            System.out.println("吃子");
+                        }
+                    }else {
+                        //第n次点击的时候没有棋子，点的是空白地方
+                        //移动
+                        System.out.println("移动");
+                    }
+                }
+                System.out.println("点击的棋子对象为：selectedChess===" + selectedChess);
+                System.out.println("============一个棋子对象的操作==============");
             }
         });
     }
