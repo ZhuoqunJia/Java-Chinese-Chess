@@ -20,7 +20,6 @@ public class Chess {
     //棋子名称
     private String name; //若为public修饰，则违反了java面向对象三大特性之一的封装性，使用set和get方法
 
-
     //棋子图片后缀
     private static final String SUFFIX = ".png";
     //棋子阵营，0：红，1：黑
@@ -145,7 +144,7 @@ public class Chess {
         }else if ("xiang".equals(this.name)) {
             return this.line(tp) == 1 && this.getStep(tp) == 2 && !this.isBieJiao(tp, gamePanel) && !this.isOverRiver(tp);
         }else if ("ma".equals(this.name)) {
-
+            return (this.line(tp) == -1 || this.line(tp) == 0) && !this.isBieJiao(tp, gamePanel);
         }else if ("che".equals(this.name)) {
 
         }else if ("pao".equals(this.name)) {
@@ -198,7 +197,7 @@ public class Chess {
     /**
      * 判断棋子走直线还是正斜线或者都不是
      * @param tp 目标坐标
-     * @return 1：正斜线，2：y轴直线，3：x轴直线，0：都不是
+     * @return -2：都不是，-1：y轴日子，0：x轴日子，1：正斜线，2：y轴直线，3：x轴直线
      */
     public int line(Point tp){
         if(p.y == tp.y){
@@ -208,9 +207,18 @@ public class Chess {
             //y轴直线
             return 2;
         } else if (Math.abs(tp.y - p.y) == Math.abs(tp.x - p.x)) {
+            //正斜线
             return 1;
+        } else {
+            if(Math.abs(tp.x - p.x) == 1 && Math.abs(tp.y - p.y) == 2){
+                //y形日子
+                return -1;
+            }else if (Math.abs(tp.x - p.x) == 2 && Math.abs(tp.y - p.y) == 1){
+                //x形日子
+                return 0;
+            }
         }
-        return 0;
+        return -2;
     }
 
     /**
@@ -244,7 +252,17 @@ public class Chess {
             center.y = (this.p.y + tp.y) / 2;
             return gamePanel.getChessByP(center) != null;
         } else if ("ma".equals(this.name)) {
-
+            int line = this.line(tp);
+            if(line == 0){
+                //x轴日子
+                center.x = (this.p.x + tp.x) / 2;
+                center.y = this.p.y;
+            } else if (line == -1) {
+                //y轴日子
+                center.x = this.p.x;
+                center.y = (this.p.y + tp.y) / 2;
+            }
+            return gamePanel.getChessByP(center) != null;
         }
         return false;
     }
