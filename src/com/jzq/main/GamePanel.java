@@ -59,9 +59,18 @@ public class GamePanel extends JPanel {
                         }else {
                             //吃子
                             System.out.println("吃子");
-//                            if(selectedChess.isAbleMove(p)){
-//
+//                            if(selectedChess.isAbleMove(p, GamePanel.this)){
+//                                GamePanel.this.selectedChess.setP(p);
+//                                GamePanel.this.getChessByP(p).setP(null);
 //                            }
+                            if(GamePanel.this.selectedChess.isAbleMove(p, GamePanel.this)){
+                                /**
+                                 * 1、从数组中删除被吃掉的棋子
+                                 * 2、修改要移动的棋子坐标
+                                 */
+                                GamePanel.this.chesses[c.getIndex()] = null;
+                                GamePanel.this.selectedChess.setP(p);
+                            }
                         }
                     }else {
                         //第n次点击的时候没有棋子，点的是空白地方
@@ -91,11 +100,25 @@ public class GamePanel extends JPanel {
         for (Chess item:
              chesses) {
 //            System.out.println(item.getP());
-            if(item.getP().equals(p)){
+            if(item != null && item.getP().equals(p)){
                 return item; //因为return关键字是结束方法的，所以也会导致循环提前终止
             }
         }
         return null;
+    }
+
+    /**
+     * 根据网格对象p对象查找棋子索引
+     * @param p
+     * @return
+     */
+    public int getChessIndexByP(Point p){
+        for (int i = 0; i < this.chesses.length; i++) {
+            if(this.chesses[i].getP().equals(p)){
+                return i; //因为return关键字是结束方法的，所以也会导致循环提前终止
+            }
+        }
+        return -1;
     }
 
 
@@ -117,6 +140,7 @@ public class GamePanel extends JPanel {
             c.setName(names[i]); //指定棋子名称
             c.setP(ps[i]); //指定棋子的网格坐标
             c.setPlayer(0); //这是棋子阵营
+            c.setIndex(i); //设置棋子的索引
             this.chesses[i] = c; //将棋子保存到数组中
         }
 
@@ -126,7 +150,8 @@ public class GamePanel extends JPanel {
             c.setP(ps[i]); //指定棋子的网格坐标
             c.reserve(); //反转网络坐标
             c.setPlayer(1); //这是棋子阵营
-            this.chesses[i + 16] = c; //将棋子保存到数组中
+            c.setIndex(i + 16); //设置棋子的索引
+            this.chesses[c.getIndex()] = c; //将棋子保存到数组中
         }
     }
 
@@ -137,7 +162,9 @@ public class GamePanel extends JPanel {
     private void drawChesses(Graphics g){
         for (Chess item:
              this.chesses) {
-            item.draw(g, this);
+            if(null != item){
+                item.draw(g, this);
+            }
         }
     }
 

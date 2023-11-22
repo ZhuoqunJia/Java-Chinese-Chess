@@ -31,7 +31,7 @@ public class Chess {
     //棋子的网格坐标，初始位置，不可改变
     private Point initP;
     //保存每个棋子的索引位置
-//    private int index;
+    private int index;
 
     public String getName() {
         return name;
@@ -49,13 +49,13 @@ public class Chess {
         this.player = player;
     }
 
-//    public int getIndex() {
-//        return index;
-//    }
-//
-//    public void setIndex(int index) {
-//        this.index = index;
-//    }
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     public void setP(Point p) {
 
@@ -148,7 +148,16 @@ public class Chess {
         }else if ("che".equals(this.name)) {
             return this.line(tp) > 1 && this.getCountFromOriginToTarget(tp, gamePanel) == 0;
         }else if ("pao".equals(this.name)) {
-
+            Chess c = gamePanel.getChessByP(tp);
+            if(null != c){
+//                if(c.getPlayer() != this.player){
+                    //吃子
+                    return this.line(tp) > 1 && this.getCountFromOriginToTarget(tp, gamePanel) == 1;
+//                }
+            }else {
+                //移动
+                return this.line(tp) > 1 && this.getCountFromOriginToTarget(tp, gamePanel) == 0;
+            }
         }else if ("bing".equals(this.name)) {
             return true;
         }
