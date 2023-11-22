@@ -146,7 +146,7 @@ public class Chess {
         }else if ("ma".equals(this.name)) {
             return (this.line(tp) == -1 || this.line(tp) == 0) && !this.isBieJiao(tp, gamePanel);
         }else if ("che".equals(this.name)) {
-
+            return this.line(tp) > 1 && this.getCountFromOriginToTarget(tp, gamePanel) == 0;
         }else if ("pao".equals(this.name)) {
 
         }else if ("bing".equals(this.name)) {
@@ -284,6 +284,61 @@ public class Chess {
     }
 
     /**
+     * 计算起点到目标点之间的棋子数量，不计算起点和目标点上的位置
+     * @param tp
+     * @return
+     */
+    public int getCountFromOriginToTarget(Point tp, GamePanel gamePanel){
+        int start = 0;
+        int end = 0;
+        int count = 0; //计数器，保存统计棋子数量
+        int line = this.line(tp);
+        Point newP = new Point();
+        if(line == 2){
+            //y轴直线
+            newP.x = tp.x;
+            if(tp.y > this.p.y){
+                //从上往下
+                start = this.p.y + 1;
+                end = tp.y;
+            }else {
+                //从下往上
+//               start = this.p.y -1;
+//               end = tp.y;
+                //保证start是小的值，end是大的值
+                start = tp.y + 1;
+                end = this.p.y;
+            }
+            for(; start < end; start ++){
+                newP.y = start;
+                if(gamePanel.getChessByP(newP) != null){
+                    count++;
+                }
+            }
+        } else if (line == 3) {
+            //x轴直线
+            newP.y = tp.y;
+            if(tp.x > this.p.x){
+                //从左到右
+                start = this.p.x + 1;
+                end = tp.x;
+            }else {
+                //从右到左
+                start = tp.x + 1;
+                end = this.p.x;
+            }
+        }
+        for (int i = start; i < end; i++) {
+            newP.x = i;
+            if(gamePanel.getChessByP(newP) != null){
+                count++;
+            }
+        }
+        System.out.println("棋子数量===========" + count);
+        return count;
+    }
+
+    /**
      * 棋子的绘制方法
      * @param g
      * @param panel
@@ -346,6 +401,18 @@ public class Chess {
         this.p.y = 11 - this.p.y;
         this.initP = this.p; //不需要加条件，因为reserve()方法在一个棋子对象中只能运行一次
         this.calXY();
+    }
+
+    @Override
+    public String toString() {
+        return "Chess{" +
+                "name='" + name + '\'' +
+                ", player=" + player +
+                ", x=" + x +
+                ", y=" + y +
+                ", p=" + p +
+                ", initP=" + initP +
+                '}';
     }
 
     public static void main(String[] args) {
