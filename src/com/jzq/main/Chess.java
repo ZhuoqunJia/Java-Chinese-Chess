@@ -79,39 +79,69 @@ public class Chess {
      */
     public boolean isAbleMove(Point tp){
         if("boss".equals(this.name)){
-            //判断是否在王宫范围内
-            if(tp.x < 4 || tp.x > 6){
-                return false;
+//            //判断是否在王宫范围内
+//            if(tp.x < 4 || tp.x > 6){
+//                return false;
+//            }
+//            //上面和下面
+//            if(this.initP.y < 6){
+//                //上面
+//                if(tp.y > 3 || tp.y < 1){
+//                    return false;
+//                }
+//            }else {
+//                //下面
+//                if(tp.y < 8 || tp.y > 10){
+//                    return false;
+//                }
+//            }
+//            //判断是否走直线且只能走一步
+//            //x轴直线还是y轴直线
+//            if(p.y == tp.y){
+//                //x轴直线
+//                if (Math.abs(p.x - tp.x) == 1){
+//                    //走一步
+//                    return true;
+//                }
+//            } else if (p.x == tp.x) {
+//                //y轴直线
+//                if (Math.abs(p.y - tp.y) == 1){
+//                    //走一步
+//                    return true;
+//                }
+//            }
+            if(this.isHome(tp)){
+                if(this.line(tp) > 1){
+                    if(this.getStep(tp) == 1){
+                        return true;
+                    }
+                }
             }
-            //上面和下面
-            if(this.initP.y < 6){
-                //上面
-                if(tp.y > 3 || tp.y < 1){
-                    return false;
-                }
-            }else {
-                //下面
-                if(tp.y < 8 || tp.y > 10){
-                    return false;
-                }
-            }
-            //判断是否走直线且只能走一步
-            //x轴直线还是y轴直线
-            if(p.y == tp.y){
-                //x轴直线
-                if (Math.abs(p.x - tp.x) == 1){
-                    //走一步
-                    return true;
-                }
-            } else if (p.x == tp.x) {
-                //y轴直线
-                if (Math.abs(p.y - tp.y) == 1){
-                    //走一步
-                    return true;
-                }
-            }
-        } else if ("shi".equals(this.name)) {
 
+        } else if ("shi".equals(this.name)) {
+//            //判断是否在王宫范围内
+//            if(tp.x < 4 || tp.x > 6){
+//                return false;
+//            }
+//            //上面和下面
+//            if(this.initP.y < 6){
+//                //上面
+//                if(tp.y > 3 || tp.y < 1){
+//                    return false;
+//                }
+//            }else {
+//                //下面
+//                if(tp.y < 8 || tp.y > 10){
+//                    return false;
+//                }
+//            }
+//
+//            //走正斜线，且只能走一步
+//            if(Math.abs(tp.x - p.x) == Math.abs(tp.y - p.y) && Math.abs(tp.y - p.y) == 1){
+//                return true;
+//            }
+
+            return isHome(tp) && line(tp) == 1 && getStep(tp) == 1;
         }else if ("xiang".equals(this.name)) {
 
         }else if ("ma".equals(this.name)) {
@@ -124,6 +154,81 @@ public class Chess {
 
         }
         return false;
+    }
+
+    /**
+     * 判断棋子的网格坐标初始是在上半边还是下半边
+     * @return 1：上，2： 下
+     */
+    public int isUpOrDown(){
+        //上面和下面
+        if(this.initP.y < 6){
+            //上面
+            return 1;
+        }else {
+            //下面
+            return 2;
+        }
+    }
+
+    /**
+     * 判断棋子是否在王宫范围内
+     * @param tp
+     * @return true：在王宫范围内，false：不在王宫范围内
+     */
+    public boolean isHome(Point tp){
+        if (tp.x < 4 || tp.x > 6){
+            return false;
+        }
+        int upOrDown = this.isUpOrDown();
+        if(upOrDown == 1){
+            //上面
+            if(tp.y > 3 || tp.y < 1){
+                return false;
+            }
+        }else {
+            //下面
+            if(tp.y < 8 || tp.y > 10){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 判断棋子走直线还是正斜线或者都不是
+     * @param tp 目标坐标
+     * @return 1：正斜线，2：y轴直线，3：x轴直线，0：都不是
+     */
+    public int line(Point tp){
+        if(p.y == tp.y){
+            //x轴直线
+            return 3;
+        } else if (p.x == tp.x) {
+            //y轴直线
+            return 2;
+        } else if (Math.abs(tp.y - p.y) == Math.abs(tp.x - p.x)) {
+            return 1;
+        }
+        return 0;
+    }
+
+    /**
+     * 计算起点到目标点之间的步数
+     * @param tp
+     * @return
+     */
+    public int getStep(Point tp){
+        int line = this.line(tp);
+        if(line == 3){
+            //x直线
+            return Math.abs(tp.x - p.x);
+        } else if (line == 2 || line == 1) {
+            //y直线 或 正斜线
+            return Math.abs(tp.y - p.y);
+        } else {
+            return 0;
+        }
     }
 
     /**
