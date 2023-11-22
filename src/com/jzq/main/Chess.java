@@ -77,7 +77,7 @@ public class Chess {
      * @param tp
      * @return 返回true，表示可移动，返回false，表示不可移动
      */
-    public boolean isAbleMove(Point tp){
+    public boolean isAbleMove(Point tp, GamePanel gamePanel){
         if("boss".equals(this.name)){
 //            //判断是否在王宫范围内
 //            if(tp.x < 4 || tp.x > 6){
@@ -143,7 +143,7 @@ public class Chess {
 
             return isHome(tp) && line(tp) == 1 && getStep(tp) == 1;
         }else if ("xiang".equals(this.name)) {
-
+            return this.line(tp) == 1 && this.getStep(tp) == 2 && !this.isBieJiao(tp, gamePanel) && !this.isOverRiver(tp);
         }else if ("ma".equals(this.name)) {
 
         }else if ("che".equals(this.name)) {
@@ -151,7 +151,7 @@ public class Chess {
         }else if ("pao".equals(this.name)) {
 
         }else if ("bing".equals(this.name)) {
-
+            return true;
         }
         return false;
     }
@@ -228,6 +228,40 @@ public class Chess {
             return Math.abs(tp.y - p.y);
         } else {
             return 0;
+        }
+    }
+
+    /**
+     * 判断相 或 马是否蹩脚
+     * @param tp
+     * @param gamePanel
+     * @return true：表示蹩脚，false：表示不蹩脚
+     */
+    public boolean isBieJiao(Point tp, GamePanel gamePanel){
+        Point center = new Point();//中心点
+        if("xiang".equals(this.name)){
+            center.x = (this.p.x + tp.x) / 2;
+            center.y = (this.p.y + tp.y) / 2;
+            return gamePanel.getChessByP(center) != null;
+        } else if ("ma".equals(this.name)) {
+
+        }
+        return false;
+    }
+
+    /**
+     * 判断目标点是否过河
+     * @param tp
+     * @return true:表示过河，false:表示没有过河
+     */
+    public boolean isOverRiver(Point tp){
+        int upOrDown = this.isUpOrDown();
+        if(upOrDown == 1){
+            //上面
+            return tp.y > 5;
+        }else {
+            //下面
+            return  tp.y < 6;
         }
     }
 

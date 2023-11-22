@@ -55,18 +55,19 @@ public class GamePanel extends JPanel {
                         if(c.getPlayer() == selectedChess.getPlayer()){
                             //重新选择
                             System.out.println("重新选择");
+                            GamePanel.this.selectedChess = c;
                         }else {
                             //吃子
                             System.out.println("吃子");
-                            if(selectedChess.isAbleMove(p)){
-
-                            }
+//                            if(selectedChess.isAbleMove(p)){
+//
+//                            }
                         }
                     }else {
                         //第n次点击的时候没有棋子，点的是空白地方
                         //移动
                         System.out.println("移动");
-                        if(selectedChess.isAbleMove(p)){
+                        if(selectedChess.isAbleMove(p, GamePanel.this)){ //特殊写法
                             selectedChess.setP(p);
                         }
                     }
@@ -86,7 +87,7 @@ public class GamePanel extends JPanel {
      * @param p
      * @return
      */
-    private Chess getChessByP(Point p){
+    public Chess getChessByP(Point p){
         for (Chess item:
              chesses) {
 //            System.out.println(item.getP());
