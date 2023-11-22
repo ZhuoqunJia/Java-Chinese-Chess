@@ -37,6 +37,7 @@ public class GamePanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
 //                super.mouseClicked(e);
+                System.out.println("===================================以下为一个棋子对象的操作===================================");
                 System.out.println("点击棋盘的坐标为：x=" + e.getX() + ",y=" + e.getY());
                 Point p = Chess.getPointFromXY(e.getX(), e.getY());
                 System.out.println("点击棋子对象的棋盘的网格坐标对象为：p===" + p);
@@ -71,7 +72,7 @@ public class GamePanel extends JPanel {
                     }
                 }
                 System.out.println("点击的棋子对象为：selectedChess===" + selectedChess);
-                System.out.println("============一个棋子对象的操作==============");
+                System.out.println("===================================以上为一个棋子对象的操作===================================");
                 //刷新棋盘，即重新执行paint方法
                 repaint();
             }
@@ -134,7 +135,7 @@ public class GamePanel extends JPanel {
      */
     private void drawChesses(Graphics g){
         for (Chess item:
-             chesses) {
+             this.chesses) {
             item.draw(g, this);
         }
     }
@@ -150,7 +151,7 @@ public class GamePanel extends JPanel {
 //        super.paint(g); //清除原来的痕迹
         System.out.println("paint方法执行");
         String backGroundPicture = "picture" + File.separator + "qipan.jpg";
-        System.out.println("每拖动一次窗口，就会在画板上重新画一次");
+//        System.out.println("每拖动一次窗口，就会在画板上重新画一次");
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Image bgImg = toolkit.getImage(backGroundPicture);
         g.drawImage(bgImg, 0, 0, this);

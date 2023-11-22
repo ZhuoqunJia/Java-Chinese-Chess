@@ -79,6 +79,7 @@ public class Chess {
      */
     public boolean isAbleMove(Point tp){
         if("boss".equals(this.name)){
+            //判断是否在王宫范围内
             if(tp.x < 4 || tp.x > 6){
                 return false;
             }
@@ -90,8 +91,25 @@ public class Chess {
                 }
             }else {
                 //下面
+                if(tp.y < 8 || tp.y > 10){
+                    return false;
+                }
             }
-
+            //判断是否走直线且只能走一步
+            //x轴直线还是y轴直线
+            if(p.y == tp.y){
+                //x轴直线
+                if (Math.abs(p.x - tp.x) == 1){
+                    //走一步
+                    return true;
+                }
+            } else if (p.x == tp.x) {
+                //y轴直线
+                if (Math.abs(p.y - tp.y) == 1){
+                    //走一步
+                    return true;
+                }
+            }
         } else if ("shi".equals(this.name)) {
 
         }else if ("xiang".equals(this.name)) {
@@ -105,7 +123,7 @@ public class Chess {
         }else if ("bing".equals(this.name)) {
 
         }
-        return true;
+        return false;
     }
 
     /**
