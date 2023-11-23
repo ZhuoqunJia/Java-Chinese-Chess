@@ -37,6 +37,49 @@ public class Chess {
         return name;
     }
 
+    /**
+     * 类的方法：
+     *      分类：
+     *          实例方法：
+     *              权限修饰符 返回值类型 方法名(形参列表){方法体}
+     *              调用：必须通过实例.方法名(实参);
+     *                  返回值类型：
+     *                      void: 方法不需要强制写return语句
+     *                      数据类型：必须是与之有关系的值或变量。
+     *                      比如，是基本数据类型，是什么类型就返回相应类型的值或变量。
+     *                      如果是引用数据类型，可以返回的是子类的对象或相同类型的值
+     *           静态方法（类方法）
+     *              权限修饰符 static 返回值类型 方法名(形参列表){方法体}
+     *              调用：可以通过实例.方法名(实参) 或 类名.方法名(实参);
+     *           构造方法
+     *              权限修饰符 类名(形参列表) {
+     *                  super(); //默认调用父类中的无参构造方法
+     *              }
+     *              作用：当构造对象，必须要做的事情，可以写在构造方法中，且在创建对象时只执行一次
+     *              注意：每个类，默认都有一个无参的构造方法，如果显示定义了一个有参的构造方法，则不再提供默认的无参构造方法，需要显示的定义无参构造方法。
+     */
+
+    /**
+     * 方法重载：
+     *      1、方法名必须相同，且形参列表必须不同
+     *      2、与返回值类型无关
+     *      3、与形参名无关，只与形参类型有关
+     */
+    public Chess(){}
+
+    public Chess(String name, int player, Point p){
+        this.name = name;
+        this.player = player;
+        this.setP(p);
+    }
+
+    public Chess(String name, Point p, int player){
+        this.name = name;
+        this.player = player;
+        this.setP(p);
+    }
+
+
     public void setName(String name) {
         this.name = name;
     }

@@ -159,10 +159,10 @@ public class GamePanel extends JPanel {
         };
 
         for (int i = 0; i < ps.length; i++) {
-            Chess c = new Chess(); //创建棋子对象
-            c.setName(names[i]); //指定棋子名称
-            c.setP(ps[i]); //指定棋子的网格坐标
-            c.setPlayer(0); //这是棋子阵营
+            Chess c = new Chess(names[i], ps[i], 0); //创建棋子对象
+//            c.setName(names[i]); //指定棋子名称
+//            c.setP(ps[i]); //指定棋子的网格坐标
+//            c.setPlayer(0); //这是棋子阵营
             c.setIndex(i); //设置棋子的索引
             this.chesses[i] = c; //将棋子保存到数组中
         }
