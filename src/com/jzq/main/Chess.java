@@ -159,7 +159,17 @@ public class Chess {
                 return this.line(tp) > 1 && this.getCountFromOriginToTarget(tp, gamePanel) == 0;
             }
         }else if ("bing".equals(this.name)) {
-            return true;
+            //兵移动规则：不能后退，只能走直线，只能走一步
+            if(this.line(tp) < 2 || this.getStep(tp) != 1 || this.isBack(tp)){
+                return false;
+            }
+            //没过河只能前进，过了河既可以前进也可以左右走
+            boolean overRiver = this.isOverRiver(this.p);
+            if(overRiver){
+                return this.line(tp) > 1;
+            }else {
+                return this.line(tp) == 2;
+            }
         }
         return false;
     }
@@ -345,6 +355,27 @@ public class Chess {
         }
         System.out.println("棋子数量===========" + count);
         return count;
+    }
+
+    /**
+     * 判断是否后退
+     * @param tp
+     * @return true：表示后退，false：表示前进
+     */
+    public boolean isBack(Point tp){
+        int upOrDown = this.isUpOrDown();
+        if(upOrDown == 1){
+            //上面
+            if(tp.y < this.p.y){
+                return true;
+            }
+        }else {
+            //下面
+            if(tp.y > this.p.y){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
