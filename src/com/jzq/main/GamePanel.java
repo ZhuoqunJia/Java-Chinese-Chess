@@ -17,6 +17,9 @@ public class GamePanel extends JPanel {
     private Chess[] chesses = new Chess[32]; //保存所有的棋子
     //当前选中的棋子
     private Chess selectedChess;
+    //记住当前的阵营
+    //默认红方先走
+    private int currentPlayer = 0;
 
     //构造方法
     //无参构造方法：权限修饰符 类名(){}
@@ -31,6 +34,9 @@ public class GamePanel extends JPanel {
          *      1、点击棋盘
          *      2、如何判断点击的地方是否有棋子
          *      3、如何区分第一次选择，重新选择，移动，吃子
+         * 棋盘规则
+         *      1、红方不可以操作黑方棋子
+         *      2、一方走完结束，另一方才能走
          */
         //添加点击事件
         this.addMouseListener(new MouseAdapter() {
@@ -44,8 +50,12 @@ public class GamePanel extends JPanel {
 
                 if(null == selectedChess){
                     //第一次选择
-                    selectedChess = getChessByP(p);
                     System.out.println("第一次选择");
+                    selectedChess = getChessByP(p);
+                    if(GamePanel.this.selectedChess != null && GamePanel.this.selectedChess.getPlayer() != GamePanel.this.currentPlayer){
+                        //说明此时选择不是己方阵营的棋子，将已选择的棋子置为null
+                        GamePanel.this.selectedChess = null;
+                    }
                 }else {
                     //重新选择，移动，吃子
                     Chess c = getChessByP(p);
@@ -58,26 +68,33 @@ public class GamePanel extends JPanel {
                             GamePanel.this.selectedChess = c;
                         }else {
                             //吃子
-                            System.out.println("吃子");
 //                            if(selectedChess.isAbleMove(p, GamePanel.this)){
 //                                GamePanel.this.selectedChess.setP(p);
 //                                GamePanel.this.getChessByP(p).setP(null);
 //                            }
+                            System.out.println("吃子状态");
                             if(GamePanel.this.selectedChess.isAbleMove(p, GamePanel.this)){
                                 /**
                                  * 1、从数组中删除被吃掉的棋子
                                  * 2、修改要移动的棋子坐标
                                  */
+                                System.out.println("吃子");
                                 GamePanel.this.chesses[c.getIndex()] = null;
                                 GamePanel.this.selectedChess.setP(p);
+                                //回合结束
+                                GamePanel.this.overMyTurn();
                             }
                         }
                     }else {
                         //第n次点击的时候没有棋子，点的是空白地方
                         //移动
-                        System.out.println("移动");
+                        System.out.println("移动状态");
                         if(selectedChess.isAbleMove(p, GamePanel.this)){ //特殊写法
+                            System.out.println("移动");
                             selectedChess.setP(p);
+                            //回合结束
+                            //要写在if判断中，才是真正的移动了
+                            GamePanel.this.overMyTurn();
                         }
                     }
                 }
@@ -89,7 +106,13 @@ public class GamePanel extends JPanel {
         });
     }
 
-
+    /**
+     * 结束当前回合
+     */
+    private void overMyTurn(){
+        this.currentPlayer = this.currentPlayer == 0 ? 1 : 0;
+        this.selectedChess = null;
+    }
 
     /**
      * 根据网格坐标p对象查找棋子对象
